@@ -1,0 +1,20 @@
+<div>
+	<h1>All IP's</h1>
+	<table>
+		<thead>
+			<th>S.No.</th>
+			<th>IP</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="addres in address">
+				<td>$index</td>
+				<td>{{addres.ip}}</td>
+			</tr>
+		</tbody>
+	</table>
+    <h1>Add IP</h1>
+    <form ng-submit="addProduct()">
+        New IP:<input type="text" ng-model="adress.ip"><br/>
+        <button>Submit</button>
+    </form>
+</div>

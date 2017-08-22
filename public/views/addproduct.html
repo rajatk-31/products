@@ -1,0 +1,30 @@
+<div>
+	<h1>All products added by you</h1>
+	<table>
+		<thead>
+			<th>S.No.</th>
+			<th>Name</th>
+			<th>Price</th>
+			<th>Category</th>
+			<th>Edit</th>
+			<th>Remove</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="prod in products">
+				<td>{{$index+1}}</td>
+				<td>{{prod.name}}</td>
+				<td>{{prod.price}}</td>
+				<td>{{prod.category}}</td>
+				<td><button ng-click="edit(prod._id)">Edit</button></td>
+				<td><button ng-click="remove(prod._id)">Remove</button></td>
+			</tr>
+		</tbody>
+	</table>
+    <h1>Add Product</h1>
+    <form ng-submit="addProduct()">
+        Name:<input type="text" ng-model="product.name"><br/>
+        Price:<input type="number" ng-model="product.price"><br/>
+        category:<input type="text" ng-model="product.category"><br/>
+        <button>Submit</button>
+    </form>
+</div>

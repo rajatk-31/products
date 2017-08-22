@@ -119,7 +119,7 @@ productRoutes.post('/removeproduct', function(req, res){
 
 
 productRoutes.get('/product', function(req, res) {
-    product.find({ email: req.decoded._doc.email }, { email: 0 }, function(err, data) {
+    product.find({ $and:[{email: req.decoded._doc.email},{status: "show"}] },  function(err, data) {
         if (err) res.status(500).json({
             success: false,
             msg: "Database error"
