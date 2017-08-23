@@ -18,7 +18,7 @@ app.config(function($routeProvider, $locationProvider) {
         templateUrl: "views/allip.html",
         controller: "ipController"
     }).when('/logout', {
-        templateUrl: 'index.html',
+        templateUrl: 'views/login.html',
         controller: "logout"
     });
    
@@ -233,7 +233,7 @@ app.controller('ipController', function($http, $scope, $rootScope, $location){
 
 
 //logout controller
-app.controller('logout', function($http, $scope, $rootScope, $location){
+app.controller('logout', function($location){
     localStorage.clear();
     $location.path('/login')
-})
+});
