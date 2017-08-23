@@ -21,9 +21,11 @@ app.config(function($routeProvider, $locationProvider) {
         templateUrl: 'index.html',
         controller: "logout"
     });
+   
 
    $locationProvider.html5Mode(true);
 })
+ 
 
 //See all products
 app.controller('allProductsController', function($http, $scope, $rootScope, $location) {
@@ -54,8 +56,12 @@ app.controller('loginController', function($http, $scope, $rootScope, $location)
             
         }).then(function(response){
             console.log(response);
+            if(response.data.success==true){
                 window.localStorage.setItem('token', response.data.token);
                 $location.path('/addproduct')
+            }else{
+                alert('Authentication failed')
+            }
             
         },function(response){
             console.log(response)
@@ -95,6 +101,7 @@ app.controller('registrationController', function($http, $scope, $rootScope, $lo
 //AddProducts Controller,    CRUD operations on products
 
 app.controller('addProductController', function($http, $scope, $rootScope, $location){
+    $scope.flag=1;
      $scope.refresh = function() {
         $http({
             url: '/api/product',
@@ -132,22 +139,14 @@ app.controller('addProductController', function($http, $scope, $rootScope, $loca
         
     }
     $scope.edit=function(pro){
+        $scope.flag=2;
         $scope.product=pro;
-        $http({
-            url: "/api/removeproduct",
-            headers: {
-               
-                'x-access-token': window.localStorage.getItem('token')
-            }
-        }).then(function(response) {
-            console.log(response);
-            console.log(response.data);
-        }, function(response) {
-            console.log(response)
-        });
-     }
+        $scope.id1=pro._id;
+    }
+
      $scope.addProduct=function(){
-        $http({
+        
+            $http({
             url: '/api/addproduct',
             method: "POST",
             data: $scope.product,
@@ -162,10 +161,37 @@ app.controller('addProductController', function($http, $scope, $rootScope, $loca
         }, function(response) {
             console.log(response)
         });
+    
         $scope.refresh();
+        $scope.flag=1;
      }    
+    $scope.editProduct=function(){
+        $scope.da={
+            'id': $scope.id1,
+            'name': $scope.product.name,
+            'price': $scope.product.price,
+            'category': $scope.product.category
+        }
+     
+        $http({
+            url: "/api/editproduct",
+            method: 'POST',
+            data: $scope.da,
+            headers: {
+               
+                'x-access-token': window.localStorage.getItem('token')
+            }
+        }).then(function(response) {
+            console.log(response);
+            $scope.product={}
+            console.log(response.data);
+        }, function(response) {
+            
+     });
+     }   
     
     $scope.refresh();
+
 })
 
 
@@ -176,21 +202,30 @@ app.controller('ipController', function($http, $scope, $rootScope, $location){
         $http({
             url: '/a/address'
         }).then(function(response) {
-            console.log(response);
+            $scope.ipss=response.data.data[0].ip;
             console.log(response.data);
         }, function(response) {
             console.log(response)
         });
     }
+    $scope.refresh();
+    $scope.addIp=function(){
+        $scope.dat={
+            'id': '599bd6d6bf6d28d59c1d870f',
+            'ip': $scope.ip
+        }
     $http({
         url: '/a/addip',
-        method: 'POST'
+        method: 'POST',
+        data: $scope.dat
     }).then(function(response) {
+            $scope.ip={}
             console.log(response);
-            console.log(response.data);
         }, function(response) {
             console.log(response)
         })
+        $scope.refresh();
+    }
     
 
 })

@@ -15,13 +15,13 @@
 				<td>{{prod.name}}</td>
 				<td>{{prod.price}}</td>
 				<td>{{prod.category}}</td>
-				<td><button ng-click="edit(prod._id)">Edit</button></td>
+				<td><button ng-click="edit(prod)">Edit</button></td>
 				<td><button ng-click="remove(prod._id)">Remove</button></td>
 			</tr>
 		</tbody>
 	</table>
     <h1>Add Product</h1>
-    <form ng-submit="addProduct()">
+    <form ng-submit="v= (flag===1) ? addProduct() : editProduct()">
         Name:<input type="text" ng-model="product.name"><br/>
         Price:<input type="number" ng-model="product.price"><br/>
         category:<input type="text" ng-model="product.category"><br/>

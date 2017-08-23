@@ -6,15 +6,15 @@
 			<th>IP</th>
 		</thead>
 		<tbody>
-			<tr ng-repeat="addres in address">
-				<td>$index</td>
-				<td>{{addres.ip}}</td>
+			<tr ng-repeat="n in ipss track by $index">
+				<td>{{$index+1}}</td>
+				<td>{{n}}</td>
 			</tr>
 		</tbody>
 	</table>
     <h1>Add IP</h1>
-    <form ng-submit="addProduct()">
-        New IP:<input type="text" ng-model="adress.ip"><br/>
+    <form ng-submit="addIp()">
+        New IP:<input type="text" ng-model="ip"><br/>
         <button>Submit</button>
     </form>
 </div>
