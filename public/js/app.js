@@ -58,6 +58,7 @@ app.controller('loginController', function($http, $scope, $rootScope, $location)
             console.log(response);
             if(response.data.success==true){
                 window.localStorage.setItem('token', response.data.token);
+                $rootScope.login=true;
                 $location.path('/addproduct')
             }else{
                 alert('Authentication failed')
@@ -233,7 +234,8 @@ app.controller('ipController', function($http, $scope, $rootScope, $location){
 
 
 //logout controller
-app.controller('logout', function($location){
+app.controller('logout', function($location, $rootScope){
     localStorage.clear();
+    $rootScope.login=false;
     $location.path('/login')
 });

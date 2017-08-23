@@ -10,8 +10,8 @@
 <base href="/">
 <body>
 	<a href="/allproducts"> Click to see all products</a><br/>
-	<div ng-show=!(window.localStorage.getItem('token'))><a href="/login"> Click to Login</a></div>
-	<div ng-show=(window.localStorage.getItem('token'))><a href="/logout"> Logout</a></div>
+	<div ng-if=!login><a href="/login"> Click to Login</a></div>
+	<div ng-if=login><a href="/logout"> Logout</a></div>
 	<section ng-view></section>
 
 
