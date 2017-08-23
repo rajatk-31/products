@@ -124,8 +124,8 @@ app.controller('addProductController', function($http, $scope, $rootScope, $loca
         }
         console.log(pro);
         $http({
-            url: "/api/removeproduct",
-            method: "POST",
+            url: "/api/product",
+            method: "DELETE",
             data: $scope.da,
             headers: {
                 'x-access-token': window.localStorage.getItem('token')
@@ -148,7 +148,7 @@ app.controller('addProductController', function($http, $scope, $rootScope, $loca
      $scope.addProduct=function(){
         
             $http({
-            url: '/api/addproduct',
+            url: '/api/product',
             method: "POST",
             data: $scope.product,
             headers: {
@@ -175,8 +175,8 @@ app.controller('addProductController', function($http, $scope, $rootScope, $loca
         }
      
         $http({
-            url: "/api/editproduct",
-            method: 'POST',
+            url: "/api/product",
+            method: 'PUT',
             data: $scope.da,
             headers: {
                

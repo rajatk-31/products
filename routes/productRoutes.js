@@ -4,11 +4,12 @@ var app = express();
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var mongoose = require('mongoose');
-
+var cors = require('cors');
 var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var config = require('../config'); // get our config file
 var user = require('../models/user'); // get our mongoose model
 var product = require('../models/product')
+var address = require('../models/address') //get address module
 var registrationLogin = require('../routes/registrationLogin')
 var jwtVerify = require('../routes/jwtVerify')
 
@@ -18,9 +19,23 @@ productRoutes.use(function(req, res, next) {
   jwtVerify(req, res, next)
 })
 
-
+var corsOptions = {
+    origin: function (a, callback) {
+      console.log(a);
+      address.find({}, function(err, data) {
+              console.log(data)
+                  whitelist= data[0].ip
+                  if (whitelist.indexOf(a) !== -1 || !a) {
+                      callback(null, true)
+                    } else {
+                      callback(null,false)
+                    }
+          })
+      
+    }
+  }
 //Adding a new Product
-productRoutes.post('/addproduct', function(req, res) {
+productRoutes.post('/product', cors(corsOptions), function(req, res) {
   if (!req.body.name) {
     res.json({
       success: false,
@@ -53,7 +68,7 @@ productRoutes.post('/addproduct', function(req, res) {
 
 
 //Editing existing Product
-productRoutes.post('/editproduct', function(req,res){
+productRoutes.put('/product', cors(corsOptions), function(req,res){
 	if(!req.body.id){
 		res.json({
 			success: false,
@@ -85,7 +100,7 @@ productRoutes.post('/editproduct', function(req,res){
 
 //removing product
 
-productRoutes.post('/removeproduct', function(req, res){
+productRoutes.delete('/product', cors(corsOptions), function(req, res){
   if (!req.body.id) {
         res.json({
             success: false,
@@ -118,7 +133,7 @@ productRoutes.post('/removeproduct', function(req, res){
 })
 
 
-productRoutes.get('/product', function(req, res) {
+productRoutes.get('/product', cors(corsOptions), function(req, res) {
     product.find({ $and:[{email: req.decoded._doc.email},{status: "show"}] },  function(err, data) {
         if (err) res.status(500).json({
             success: false,
