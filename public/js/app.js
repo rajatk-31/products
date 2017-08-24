@@ -122,13 +122,14 @@ app.controller('addProductController', function($http, $scope, $rootScope, $loca
         $scope.da={
             'id': pro
         }
-        console.log(pro);
+        console.log($scope.da);
         $http({
             url: "/api/product",
             method: "DELETE",
-            data: $scope.da,
+            data: JSON.stringify($scope.da),
             headers: {
-                'x-access-token': window.localStorage.getItem('token')
+                'x-access-token': window.localStorage.getItem('token'),
+                'content-type':'application/json'
             }
         }).then(function(response) {
             

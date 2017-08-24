@@ -101,6 +101,7 @@ productRoutes.put('/product', cors(corsOptions), function(req,res){
 //removing product
 
 productRoutes.delete('/product', cors(corsOptions), function(req, res){
+    console.log('product',req.body)
   if (!req.body.id) {
         res.json({
             success: false,
